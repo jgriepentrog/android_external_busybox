@@ -63,7 +63,6 @@ void FAST_FUNC data_extract_to_command(archive_handle_t *archive_handle)
 {
 	file_header_t *file_header = archive_handle->file_header;
 
-
 #if ENABLE_FEATURE_TAR_SELINUX
 	char *sctx = archive_handle->tar__sctx[PAX_NEXT_FILE];
 	if (!sctx)
@@ -74,7 +73,6 @@ void FAST_FUNC data_extract_to_command(archive_handle_t *archive_handle)
 		archive_handle->tar__sctx[PAX_NEXT_FILE] = NULL;
 	}
 #endif
-
 
 	if ((file_header->mode & S_IFMT) == S_IFREG) {
 		pid_t pid;
