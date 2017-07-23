@@ -134,8 +134,6 @@ typedef struct archive_handle_t {
 #define ARCHIVE_STORE_SELINUX		(1 << 15)
 #endif
 
-
-
 /* POSIX tar Header Block, from POSIX 1003.1-1990  */
 #define TAR_BLOCK_SIZE 512
 #define NAME_SIZE      100

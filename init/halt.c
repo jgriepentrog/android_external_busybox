@@ -46,8 +46,9 @@
 //config:	  locating telinit executable.
 
 //applet:IF_HALT(APPLET(halt, BB_DIR_SBIN, BB_SUID_DROP))
+//                   APPLET_ODDNAME:name      main  location     suid_type     help
 //applet:IF_POWEROFF(APPLET_ODDNAME(poweroff, halt, BB_DIR_SBIN, BB_SUID_DROP, poweroff))
-//applet:IF_REBOOT(APPLET_ODDNAME(reboot, halt, BB_DIR_SBIN, BB_SUID_DROP, reboot))
+//applet:IF_REBOOT(  APPLET_ODDNAME(reboot,   halt, BB_DIR_SBIN, BB_SUID_DROP, reboot))
 
 //kbuild:lib-$(CONFIG_HALT) += halt.o
 //kbuild:lib-$(CONFIG_POWEROFF) += halt.o
@@ -83,11 +84,9 @@
 #include "libbb.h"
 #include "reboot.h"
 
-
 #ifdef __BIONIC__
 # include "android/reboot.c"
 #endif
-
 
 #if ENABLE_FEATURE_WTMP
 #include <sys/utsname.h>

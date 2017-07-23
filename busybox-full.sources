@@ -17,7 +17,7 @@ archival/libarchive/unsafe_prefix.c
 console-tools/chvt.c console-tools/clear.c console-tools/deallocvt.c console-tools/fgconsole.c console-tools/openvt.c
 console-tools/reset.c console-tools/resize.c console-tools/setconsole.c console-tools/setkeycodes.c
 
-coreutils/basename.c coreutils/cal.c coreutils/cat.c coreutils/catv.c coreutils/chgrp.c coreutils/chmod.c coreutils/chown.c coreutils/chroot.c coreutils/cp.c coreutils/cut.c coreutils/date.c coreutils/dd.c coreutils/df.c coreutils/dirname.c coreutils/dos2unix.c coreutils/du.c coreutils/echo.c coreutils/env.c coreutils/expr.c coreutils/false.c coreutils/fold.c coreutils/head.c coreutils/id.c coreutils/install.c coreutils/ln.c coreutils/ls.c coreutils/md5_sha1_sum.c coreutils/mkdir.c coreutils/mkfifo.c coreutils/mknod.c coreutils/mv.c coreutils/nice.c coreutils/nohup.c coreutils/od.c coreutils/printenv.c coreutils/printf.c coreutils/pwd.c coreutils/readlink.c coreutils/realpath.c coreutils/rm.c coreutils/rmdir.c coreutils/seq.c coreutils/shuf.c coreutils/sleep.c coreutils/sort.c coreutils/split.c coreutils/stat.c coreutils/stty.c coreutils/sync.c coreutils/tac.c coreutils/tail.c coreutils/tee.c coreutils/test.c coreutils/test_ptr_hack.c coreutils/touch.c coreutils/tr.c coreutils/true.c coreutils/truncate.c coreutils/uname.c coreutils/uniq.c coreutils/unlink.c coreutils/usleep.c coreutils/uudecode.c coreutils/uuencode.c coreutils/wc.c coreutils/whoami.c coreutils/yes.c
+coreutils/basename.c coreutils/cal.c coreutils/cat.c coreutils/chgrp.c coreutils/chmod.c coreutils/chown.c coreutils/chroot.c coreutils/cp.c coreutils/cut.c coreutils/date.c coreutils/dd.c coreutils/df.c coreutils/dirname.c coreutils/dos2unix.c coreutils/du.c coreutils/echo.c coreutils/env.c coreutils/expr.c coreutils/false.c coreutils/fold.c coreutils/head.c coreutils/id.c coreutils/install.c coreutils/ln.c coreutils/ls.c coreutils/md5_sha1_sum.c coreutils/mkdir.c coreutils/mkfifo.c coreutils/mknod.c coreutils/mv.c coreutils/nice.c coreutils/nohup.c coreutils/od.c coreutils/printenv.c coreutils/printf.c coreutils/pwd.c coreutils/readlink.c coreutils/realpath.c coreutils/rm.c coreutils/rmdir.c coreutils/seq.c coreutils/shuf.c coreutils/sleep.c coreutils/sort.c coreutils/split.c coreutils/stat.c coreutils/stty.c coreutils/sync.c coreutils/tac.c coreutils/tail.c coreutils/tee.c coreutils/test.c coreutils/test_ptr_hack.c coreutils/touch.c coreutils/tr.c coreutils/true.c coreutils/truncate.c coreutils/uname.c coreutils/uniq.c coreutils/unlink.c coreutils/usleep.c coreutils/uudecode.c coreutils/uuencode.c coreutils/wc.c coreutils/whoami.c coreutils/yes.c
 coreutils/libcoreutils/cp_mv_stat.c coreutils/libcoreutils/getopt_mk_fifo_nod.c
 coreutils/comm.c coreutils/expand.c coreutils/sum.c coreutils/fsync.c
 
@@ -31,19 +31,19 @@ findutils/find.c findutils/grep.c findutils/xargs.c
 init/halt.c init/mesg.c
 
 libbb/missing_syscalls.c
-libbb/appletlib.c libbb/ask_confirmation.c libbb/bb_askpass.c libbb/auto_string.c libbb/bb_do_delay.c libbb/bb_pwd.c libbb/bb_qsort.c libbb/bb_strtonum.c
+libbb/appletlib.c libbb/ask_confirmation.c libbb/bb_askpass.c libbb/auto_string.c libbb/bb_cat.c libbb/bb_do_delay.c libbb/bb_pwd.c libbb/bb_qsort.c libbb/bb_strtonum.c
 libbb/change_identity.c libbb/chomp.c libbb/common_bufsiz.c libbb/compare_string_array.c libbb/concat_path_file.c libbb/concat_subpath_file.c libbb/copy_file.c
 libbb/copyfd.c libbb/crc32.c libbb/percent_decode.c libbb/default_error_retval.c libbb/device_open.c libbb/dump.c libbb/executable.c libbb/fclose_nonstdin.c
 libbb/fflush_stdout_and_exit.c libbb/fgets_str.c libbb/find_mount_point.c libbb/find_pid_by_name.c libbb/find_root_device.c libbb/full_write.c
 libbb/get_console.c libbb/get_cpu_count.c libbb/get_last_path_component.c libbb/get_line_from_file.c libbb/get_volsize.c
 libbb/getopt32.c libbb/getpty.c libbb/get_shell_name.c
-libbb/herror_msg.c libbb/human_readable.c libbb/inet_cksum.c libbb/inet_common.c libbb/inode_hash.c libbb/isdirectory.c
+libbb/herror_msg.c libbb/human_readable.c libbb/inet_cksum.c libbb/inet_common.c libbb/inode_hash.c libbb/isdirectory.c libbb/isqrt.c
 libbb/kernel_version.c libbb/last_char_is.c libbb/lineedit.c libbb/lineedit_ptr_hack.c libbb/llist.c libbb/login.c libbb/loop.c
 libbb/make_directory.c libbb/makedev.c libbb/match_fstype.c libbb/hash_md5_sha.c libbb/bb_bswap_64.c libbb/messages.c libbb/mode_string.c libbb/mtab.c
 libbb/parse_config.c libbb/parse_mode.c libbb/pw_encrypt.c libbb/perror_msg.c libbb/perror_nomsg.c libbb/perror_nomsg_and_die.c libbb/pidfile.c libbb/platform.c
-libbb/print_flags.c libbb/printable.c libbb/printable_string.c libbb/process_escape_sequence.c libbb/procps.c libbb/progress.c
+libbb/print_flags.c libbb/print_numbered_lines.c libbb/printable.c libbb/printable_string.c libbb/process_escape_sequence.c libbb/procps.c libbb/progress.c
 libbb/ptr_to_globals.c libbb/read.c libbb/read_key.c libbb/read_printf.c libbb/recursive_action.c libbb/remove_file.c libbb/replace.c libbb/rtc.c libbb/run_shell.c
-libbb/safe_gethostname.c libbb/safe_poll.c libbb/safe_strncpy.c libbb/safe_write.c libbb/setup_environment.c libbb/signals.c
+libbb/safe_gethostname.c libbb/safe_poll.c libbb/safe_strncpy.c libbb/safe_write.c libbb/securetty.c libbb/setup_environment.c libbb/signals.c
 libbb/simplify_path.c libbb/single_argv.c libbb/skip_whitespace.c libbb/speed_table.c libbb/str_tolower.c libbb/strrstr.c libbb/sysconf.c
 libbb/time.c libbb/trim.c libbb/u_signal_names.c libbb/ubi.c libbb/udp_io.c libbb/unicode.c libbb/uuencode.c
 libbb/vdprintf.c libbb/verror_msg.c libbb/vfork_daemon_rexec.c libbb/warn_ignoring_args.c libbb/wfopen.c libbb/wfopen_input.c

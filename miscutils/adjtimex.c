@@ -36,7 +36,6 @@
 #include "libbb.h"
 #ifdef __BIONIC__
 # include <linux/timex.h>
-extern int adjtimex (struct timex *);
 #else
 # include <sys/timex.h>
 #endif

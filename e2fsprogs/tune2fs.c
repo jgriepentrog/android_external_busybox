@@ -88,7 +88,6 @@ int tune2fs_main(int argc UNUSED_PARAM, char **argv)
 
 	if (opts & OPT_C) {
 		int n = xatoi_range(str_C, 1, 0xfffe);
-		if (n == 0) n = 1; 
 		STORE_LE(sb->s_mnt_count, (unsigned)n);
 	}
 

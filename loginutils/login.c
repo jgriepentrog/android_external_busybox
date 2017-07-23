@@ -24,7 +24,7 @@
 //config:	  will not be cleaned up.
 //config:
 //config:config LOGIN_SCRIPTS
-//config:	bool "Support for login scripts"
+//config:	bool "Support login scripts"
 //config:	depends on LOGIN
 //config:	default y
 //config:	help
@@ -32,7 +32,7 @@
 //config:	  just prior to switching from root to logged-in user.
 //config:
 //config:config FEATURE_NOLOGIN
-//config:	bool "Support for /etc/nologin"
+//config:	bool "Support /etc/nologin"
 //config:	default y
 //config:	depends on LOGIN
 //config:	help
@@ -40,7 +40,7 @@
 //config:	  If it exists, non-root logins are prohibited.
 //config:
 //config:config FEATURE_SECURETTY
-//config:	bool "Support for /etc/securetty"
+//config:	bool "Support /etc/securetty"
 //config:	default y
 //config:	depends on LOGIN
 //config:	help
@@ -68,7 +68,6 @@
 
 #if ENABLE_SELINUX
 # include <selinux/selinux.h>  /* for is_selinux_enabled()  */
-
 #ifndef __BIONIC__
 # include <selinux/get_context_list.h> /* for get_default_context() */
 # /* from deprecated <selinux/flask.h>: */
@@ -76,7 +75,6 @@
 # define SECCLASS_CHR_FILE 10
 #endif
 #endif
-
 
 #if ENABLE_PAM
 /* PAM may include <locale.h>. We may need to undefine bbox's stub define: */
@@ -179,25 +177,6 @@ static void die_if_nologin(void)
 # define die_if_nologin() ((void)0)
 #endif
 
-#if ENABLE_FEATURE_SECURETTY && !ENABLE_PAM
-static int check_securetty(const char *short_tty)
-{
-	char *buf = (char*)"/etc/securetty"; /* any non-NULL is ok */
-	parser_t *parser = config_open2("/etc/securetty", fopen_for_read);
-	while (config_read(parser, &buf, 1, 1, "# \t", PARSE_NORMAL)) {
-		if (strcmp(buf, short_tty) == 0)
-			break;
-		buf = NULL;
-	}
-	config_close(parser);
-	/* buf != NULL here if config file was not found, empty
-	 * or line was found which equals short_tty */
-	return buf != NULL;
-}
-#else
-static ALWAYS_INLINE int check_securetty(const char *short_tty UNUSED_PARAM) { return 1; }
-#endif
-
 #if ENABLE_SELINUX
 static void initselinux(char *username, char *full_tty,
 						security_context_t *user_sid)
@@ -218,10 +197,7 @@ static void initselinux(char *username, char *full_tty,
 		bb_perror_msg_and_die("security_change_sid(%s) failed", full_tty);
 	}
 	if (setfilecon(full_tty, new_tty_sid) != 0) {
-		
-		if (strcmp(old_tty_sid, new_tty_sid))
-			bb_perror_msg_and_die("chsid(%s, %s) failed", full_tty, new_tty_sid);
-		
+		bb_perror_msg_and_die("chsid(%s, %s) failed", full_tty, new_tty_sid);
 	}
 }
 #endif
@@ -500,7 +476,11 @@ int login_main(int argc UNUSED_PARAM, char **argv)
 					pam_strerror(pamh, pamret), pamret);
 		safe_strncpy(username, "UNKNOWN", sizeof(username));
 #else /* not PAM */
-		pw = safegetpwnam(username); 
+		#ifdef __BIONIC__
+		pw = safegetpwnam(username);
+		#else
+		pw = getpwnam(username);
+		#endif
 		if (!pw) {
 			strcpy(username, "UNKNOWN");
 			goto fake_it;
@@ -512,7 +492,7 @@ int login_main(int argc UNUSED_PARAM, char **argv)
 		if (opt & LOGIN_OPT_f)
 			break; /* -f USER: success without asking passwd */
 
-		if (pw->pw_uid == 0 && !check_securetty(short_tty))
+		if (pw->pw_uid == 0 && !is_tty_secure(short_tty))
 			goto auth_failed;
 
 		/* Don't check the password if password entry is empty (!) */

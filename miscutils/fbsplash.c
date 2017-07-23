@@ -496,7 +496,11 @@ int fbsplash_main(int argc UNUSED_PARAM, char **argv)
 	INIT_G();
 
 	// parse command line options
-	fb_device = "/dev/graphics/fb0"; 
+	#ifdef __BIONIC_
+	fb_device = "/dev/graphics/fb0";
+	#else
+	fb_device = "/dev/fb0";
+	#endif
 	cfg_filename = NULL;
 	fifo_filename = NULL;
 	bCursorOff = 1 & getopt32(argv, "cs:d:i:f:",

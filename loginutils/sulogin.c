@@ -54,8 +54,11 @@ int sulogin_main(int argc UNUSED_PARAM, char **argv)
 		dup(0);
 	}
 
-
+	#ifdef __BIONIC__
 	pwd = safegetpwuid(0);
+	#else
+	pwd = getpwuid(0);
+	#endif
 
 	if (!pwd) {
 		bb_error_msg_and_die("no password entry for root");

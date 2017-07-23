@@ -52,7 +52,7 @@
 //usage:       "	-f	Foreground"
 //usage:     "\n	-b	Background (default)"
 //usage:     "\n	-S	Log to syslog (default)"
-//usage:     "\n	-l N	Set log level. Most verbose:0, default:8"
+//usage:     "\n	-l N	Set log level. Most verbose 0, default 8"
 //usage:	IF_FEATURE_CROND_D(
 //usage:     "\n	-d N	Set log level, log to stderr"
 //usage:	)
@@ -72,13 +72,11 @@
 #endif
 
 
-
 #ifdef __BIONIC__
 #define CRON_DIR          "/data/local/tmp"
 #else
 #define CRON_DIR        CONFIG_FEATURE_CROND_DIR
 #endif
-
 #define CRONTABS        CONFIG_FEATURE_CROND_DIR "/crontabs"
 #ifndef SENDMAIL
 # define SENDMAIL       "sendmail"
@@ -760,7 +758,11 @@ static void start_one_job(const char *user, CronLine *line)
 	struct passwd *pas;
 	pid_t pid;
 
-	pas = safegetpwnam(user); 
+	#ifdef __BIONIC__
+	pas = safegetpwnam(user);
+	#else
+	pas = getpwnam(user);
+	#endif
 	if (!pas) {
 		bb_error_msg("can't get uid for %s", user);
 		goto err;

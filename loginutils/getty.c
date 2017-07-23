@@ -84,7 +84,6 @@ static FILE *dbf;
 #define _PATH_LOGIN "/bin/login"
 #endif
 
-
 /* Displayed before the login prompt.
  * If ISSUE is not defined, getty will never display the contents of the
  * /etc/issue file. You will not want to spit out large "issue" files at the
@@ -123,7 +122,7 @@ struct globals {
 //usage:#define getty_trivial_usage
 //usage:       "[OPTIONS] BAUD_RATE[,BAUD_RATE]... TTY [TERMTYPE]"
 //usage:#define getty_full_usage "\n\n"
-//usage:       "Open TTY, prompt for login name, then invoke /system/xbin/login\n"
+//usage:       "Open TTY, prompt for login name, then invoke /bin/login (/system/xbin/login for bionic)\n"
 //usage:     "\n	-h		Enable hardware RTS/CTS flow control"
 //usage:     "\n	-L		Set CLOCAL (ignore Carrier Detect state)"
 //usage:     "\n	-m		Get baud rate from modem's CONNECT status message"
@@ -131,7 +130,7 @@ struct globals {
 //usage:     "\n	-w		Wait for CR or LF before sending /etc/issue"
 //usage:     "\n	-i		Don't display /etc/issue"
 //usage:     "\n	-f ISSUE_FILE	Display ISSUE_FILE instead of /etc/issue"
-//usage:     "\n	-l LOGIN	Invoke LOGIN instead of /system/xbin/login"
+//usage:     "\n	-l LOGIN	Invoke LOGIN instead of /bin/login (/system/xbin/login for bionic)"
 //usage:     "\n	-t SEC		Terminate after SEC if no login name is read"
 //usage:     "\n	-I INITSTR	Send INITSTR before anything else"
 //usage:     "\n	-H HOST		Log HOST into the utmp file as the hostname"
@@ -323,7 +322,7 @@ static void init_tty_attrs(int speed)
 	/* non-raw output; add CR to each NL */
 	G.tty_attrs.c_oflag = OPOST | ONLCR;
 
-	/* reads would block only if < 1 char is available */
+	/* reads will block only if < 1 char is available */
 	G.tty_attrs.c_cc[VMIN] = 1;
 	/* no timeout (reads block forever) */
 	G.tty_attrs.c_cc[VTIME] = 0;
